@@ -1,0 +1,38 @@
+version: '3'
+services:
+  wordpressdb:
+    image: mariadb:latest
+    volumes:
+       - mysql_storage_new:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: kamlesh
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+
+  webapp:
+    image: wordpress:latest
+    restart: always
+    depends_on:
+      - wordpressdb
+    ports:
+      - 8081:80
+    environment:
+      WORDPRESS_DB_HOST: wordpressdb
+      WORDPRESS_DB_USER: kamlesh
+      WORDPRESS_DB_PASSWORD: root
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp_storage_new:/var/www/html
+
+
+volumes:
+  wp_storage_new:
+  mysql_storage_new:
+                                
+
+
+
+
+          
